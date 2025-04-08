@@ -9,4 +9,12 @@ export class ClientsRepository {
   public async findAll() {
     return this.$db.clients.findMany();
   }
+
+  public async findById(id: string) {
+    return this.$db.clients.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }
