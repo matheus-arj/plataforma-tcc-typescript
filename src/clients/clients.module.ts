@@ -1,10 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
+import { AppModule } from 'src/app.module';
 import { ClientsRepository } from './clients.repository';
 import { ClientsController } from './controllers/clients.controller';
 import { ClientsService } from './services/clients.service';
-import { FindClientsUseCase } from './use-cases/find-clients.use-case';
-import { AppModule } from 'src/app.module';
+import { CreateClientUseCase } from './use-cases/create-client.use-case';
 import { FindClientUseCase } from './use-cases/find-client.use-case';
+import { FindClientsUseCase } from './use-cases/find-clients.use-case';
 
 @Module({
   imports: [forwardRef(() => AppModule)],
@@ -14,8 +15,14 @@ import { FindClientUseCase } from './use-cases/find-client.use-case';
     ClientsRepository,
     FindClientsUseCase,
     FindClientUseCase,
+    CreateClientUseCase,
   ],
   controllers: [ClientsController],
-  exports: [ClientsRepository, FindClientsUseCase, FindClientUseCase],
+  exports: [
+    ClientsRepository,
+    FindClientsUseCase,
+    FindClientUseCase,
+    CreateClientUseCase,
+  ],
 })
 export class ClientsModule {}
