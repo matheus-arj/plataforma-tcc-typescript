@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Inject, Injectable } from '@nestjs/common';
+import { Clients } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -15,6 +17,12 @@ export class ClientsRepository {
       where: {
         id,
       },
+    });
+  }
+
+  public async create(data: any): Promise<Clients> {
+    return this.$db.clients.create({
+      data,
     });
   }
 }
