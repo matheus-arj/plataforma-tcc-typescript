@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateClientDto } from '../dtos/create-client.dto';
+import { UpdateClientDto } from '../dtos/update-client.dto';
 import { CreateClientUseCase } from '../use-cases/create-client.use-case';
 import { FindClientUseCase } from '../use-cases/find-client.use-case';
 import { FindClientsUseCase } from '../use-cases/find-clients.use-case';
+import { UpdateClientUseCase } from '../use-cases/update-client.use-case';
 
 @Controller('clients')
 export class ClientsController {
@@ -12,6 +22,8 @@ export class ClientsController {
   private readonly findClientUseCase: FindClientUseCase;
   @Inject(CreateClientUseCase)
   private readonly createClientUseCase: CreateClientUseCase;
+  @Inject(UpdateClientUseCase)
+  private readonly updateClientUseCase: UpdateClientUseCase;
 
   @Get()
   public async findAll() {
@@ -26,5 +38,10 @@ export class ClientsController {
   @Post()
   public async create(@Body() data: CreateClientDto) {
     return await this.createClientUseCase.execute(data);
+  }
+
+  @Put(':id')
+  public async update(@Param('id') id: string, @Body() data: UpdateClientDto) {
+    return await this.updateClientUseCase.execute(id, data);
   }
 }

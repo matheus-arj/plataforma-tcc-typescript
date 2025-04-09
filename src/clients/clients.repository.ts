@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Clients } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateClientDto } from './dtos/create-client.dto';
+import { UpdateClientDto } from './dtos/update-client.dto';
 
 @Injectable()
 export class ClientsRepository {
@@ -31,6 +32,23 @@ export class ClientsRepository {
   public async create(data: CreateClientDto): Promise<Clients | null> {
     try {
       return await this.$db.clients.create({
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
+  }
+
+  public async update(
+    id: string,
+    data: UpdateClientDto,
+  ): Promise<Clients | null> {
+    try {
+      return this.$db.clients.update({
+        where: {
+          id,
+        },
         data,
       });
     } catch (error) {
