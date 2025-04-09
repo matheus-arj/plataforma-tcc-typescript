@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -10,6 +11,7 @@ import {
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { UpdateClientDto } from '../dtos/update-client.dto';
 import { CreateClientUseCase } from '../use-cases/create-client.use-case';
+import { DeleteClientUseCase } from '../use-cases/delete-client.use-case';
 import { FindClientUseCase } from '../use-cases/find-client.use-case';
 import { FindClientsUseCase } from '../use-cases/find-clients.use-case';
 import { UpdateClientUseCase } from '../use-cases/update-client.use-case';
@@ -24,6 +26,8 @@ export class ClientsController {
   private readonly createClientUseCase: CreateClientUseCase;
   @Inject(UpdateClientUseCase)
   private readonly updateClientUseCase: UpdateClientUseCase;
+  @Inject(DeleteClientUseCase)
+  private readonly deleteClientUseCase: DeleteClientUseCase;
 
   @Get()
   public async findAll() {
@@ -43,5 +47,10 @@ export class ClientsController {
   @Put(':id')
   public async update(@Param('id') id: string, @Body() data: UpdateClientDto) {
     return await this.updateClientUseCase.execute(id, data);
+  }
+
+  @Delete(':id')
+  public async delete(@Param('id') id: string) {
+    return await this.deleteClientUseCase.execute(id);
   }
 }
