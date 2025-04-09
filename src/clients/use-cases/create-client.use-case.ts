@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Clients } from '@prisma/client';
 import { ClientsRepository } from '../clients.repository';
 import { CreateClientDto } from '../dtos/create-client.dto';
@@ -10,12 +10,20 @@ export class CreateClientUseCase {
 
   public async execute(data: CreateClientDto): Promise<Clients> {
     console.log(`Creating client with data: ${JSON.stringify(data)}`);
+    await this.verifyEmail(data.email);
     const client = await this.clientsRepository.create(data);
 
     if (!client) {
-      throw new Error('Client creation failed');
+      throw new BadRequestException('Client creation failed');
     }
 
     return client;
+  }
+
+  private async verifyEmail(email: string): Promise<void> {
+    const client = await this.clientsRepository.findByEmail(email);
+    if (client) {
+      throw new BadRequestException('Email already exists');
+    }
   }
 }
