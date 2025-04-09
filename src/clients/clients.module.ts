@@ -6,6 +6,7 @@ import { ClientsService } from './services/clients.service';
 import { CreateClientUseCase } from './use-cases/create-client.use-case';
 import { FindClientUseCase } from './use-cases/find-client.use-case';
 import { FindClientsUseCase } from './use-cases/find-clients.use-case';
+import { UpdateClientUseCase } from './use-cases/update-client.use-case';
 
 @Module({
   imports: [forwardRef(() => AppModule)],
@@ -16,6 +17,7 @@ import { FindClientsUseCase } from './use-cases/find-clients.use-case';
     FindClientsUseCase,
     FindClientUseCase,
     CreateClientUseCase,
+    UpdateClientUseCase,
   ],
   controllers: [ClientsController],
   exports: [
@@ -23,6 +25,7 @@ import { FindClientsUseCase } from './use-cases/find-clients.use-case';
     FindClientsUseCase,
     FindClientUseCase,
     CreateClientUseCase,
+    UpdateClientUseCase,
   ],
 })
 export class ClientsModule {}
