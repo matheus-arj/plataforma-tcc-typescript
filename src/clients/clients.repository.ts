@@ -56,4 +56,12 @@ export class ClientsRepository {
     }
     return null;
   }
+
+  public async delete(id: string): Promise<Clients> {
+    return this.$db.clients.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
