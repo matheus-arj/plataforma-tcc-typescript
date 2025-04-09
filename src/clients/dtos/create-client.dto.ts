@@ -1,4 +1,5 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateClientDto {
   @IsString()
@@ -14,6 +15,6 @@ export class CreateClientDto {
   email: string;
 
   @IsNotEmpty()
-  @IsDateString()
-  birthdate: string;
+  @Transform(({ value }) => new Date(value).toISOString()) // Transform the date to ISO-8601
+  birthdate: Date;
 }
