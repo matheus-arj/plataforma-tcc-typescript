@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Inject, Injectable } from '@nestjs/common';
 import { Clients } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { CreateClientDto } from './dtos/create-client.dto';
 
 @Injectable()
 export class ClientsRepository {
@@ -20,9 +20,22 @@ export class ClientsRepository {
     });
   }
 
-  public async create(data: any): Promise<Clients> {
-    return this.$db.clients.create({
-      data,
+  public async findByEmail(email: string) {
+    return this.$db.clients.findUnique({
+      where: {
+        email,
+      },
     });
+  }
+
+  public async create(data: CreateClientDto): Promise<Clients | null> {
+    try {
+      return await this.$db.clients.create({
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
   }
 }
