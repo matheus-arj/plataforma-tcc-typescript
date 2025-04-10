@@ -8,13 +8,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateClientDto } from '../dtos/create-client.dto';
-import { UpdateClientDto } from '../dtos/update-client.dto';
-import { CreateClientUseCase } from '../use-cases/create-client.use-case';
-import { DeleteClientUseCase } from '../use-cases/delete-client.use-case';
-import { FindClientUseCase } from '../use-cases/find-client.use-case';
-import { FindClientsUseCase } from '../use-cases/find-clients.use-case';
-import { UpdateClientUseCase } from '../use-cases/update-client.use-case';
+import { CreateClientDto } from './dtos/create-client.dto';
+import { UpdateClientDto } from './dtos/update-client.dto';
+import { CreateClientUseCase } from './use-cases/create-client.use-case';
+import { DeleteClientUseCase } from './use-cases/delete-client.use-case';
+import { FindClientUseCase } from './use-cases/find-client.use-case';
+import { FindClientsUseCase } from './use-cases/find-clients.use-case';
+import { UpdateClientUseCase } from './use-cases/update-client.use-case';
 
 @Controller('clients')
 export class ClientsController {
