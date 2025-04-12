@@ -30,4 +30,10 @@ export class ProductsRepository {
       data,
     });
   }
+
+  public async delete(id: string): Promise<Products> {
+    return await this.$db.products.delete({
+      where: { id },
+    });
+  }
 }

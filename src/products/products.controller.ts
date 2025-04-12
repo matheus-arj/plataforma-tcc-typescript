@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -10,6 +11,7 @@ import {
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductUseCase } from './use-cases/create-product.use-case';
+import { DeleteProductUseCase } from './use-cases/delete-product.use-case';
 import { FindProductUseCase } from './use-cases/find-product.use-case';
 import { FindProductsUseCase } from './use-cases/find-products.use-case';
 import { UpdateProductUseCase } from './use-cases/update-product.use-case';
@@ -24,6 +26,8 @@ export class ProductsController {
   private readonly $createProductUseCase: CreateProductUseCase;
   @Inject(UpdateProductUseCase)
   private readonly $updateProductUseCase: UpdateProductUseCase;
+  @Inject(DeleteProductUseCase)
+  private readonly $deleteProductUseCase: DeleteProductUseCase;
 
   @Get()
   findAll() {
@@ -43,5 +47,10 @@ export class ProductsController {
   @Put(':id')
   update(@Param('id') id: string, @Body() data: UpdateProductDto) {
     return this.$updateProductUseCase.execute(id, data);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.$deleteProductUseCase.execute(id);
   }
 }
