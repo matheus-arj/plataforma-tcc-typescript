@@ -10,4 +10,9 @@ export class ProductsRepository {
   public async findAll(): Promise<Products[]> {
     return await this.$db.products.findMany();
   }
+  public async findById(id: string) {
+    return await this.$db.products.findUnique({
+      where: { id },
+    });
+  }
 }
