@@ -12,7 +12,7 @@ export class ProductsRepository {
     return await this.$db.products.findMany();
   }
 
-  public async findById(id: string) {
+  public async findById(id: string): Promise<Products | null> {
     return await this.$db.products.findUnique({
       where: { id },
     });

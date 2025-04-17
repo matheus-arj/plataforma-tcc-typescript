@@ -8,6 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Products } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductUseCase } from './use-cases/create-product.use-case';
@@ -35,22 +36,25 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: string) {
+  findById(@Param('id') id: string): Promise<Products> {
     return this.$findProductUseCase.execute(id);
   }
 
   @Post()
-  create(@Body() data: CreateProductDto) {
+  create(@Body() data: CreateProductDto): Promise<Products> {
     return this.$createProductUseCase.execute(data);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: UpdateProductDto) {
+  update(
+    @Param('id') id: string,
+    @Body() data: UpdateProductDto,
+  ): Promise<Products> {
     return this.$updateProductUseCase.execute(id, data);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: string): Promise<Products> {
     return this.$deleteProductUseCase.execute(id);
   }
 }
