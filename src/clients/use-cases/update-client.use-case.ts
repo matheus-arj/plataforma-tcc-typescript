@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Clients } from '@prisma/client';
 import { ClientsRepository } from '../clients.repository';
 import { UpdateClientDto } from '../dtos/update-client.dto';
 
@@ -9,7 +10,7 @@ export class UpdateClientUseCase {
   @Inject(ClientsRepository)
   private readonly clientsRepository: ClientsRepository;
 
-  public async execute(id: string, data: UpdateClientDto) {
+  public async execute(id: string, data: UpdateClientDto): Promise<Clients> {
     await this.verifyClientIfExists(id);
 
     this.logger.log(`Updating client with id: ${id}`);

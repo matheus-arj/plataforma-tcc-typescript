@@ -9,11 +9,11 @@ export class ClientsRepository {
   @Inject(PrismaService)
   private readonly $db: PrismaService;
 
-  public async findAll() {
+  public async findAll(): Promise<Clients[]> {
     return this.$db.clients.findMany();
   }
 
-  public async findById(id: string) {
+  public async findById(id: string): Promise<Clients | null> {
     return this.$db.clients.findUnique({
       where: {
         id,
@@ -21,7 +21,7 @@ export class ClientsRepository {
     });
   }
 
-  public async findByEmail(email: string) {
+  public async findByEmail(email: string): Promise<Clients | null> {
     return this.$db.clients.findUnique({
       where: {
         email,
@@ -29,32 +29,19 @@ export class ClientsRepository {
     });
   }
 
-  public async create(data: CreateClientDto): Promise<Clients | null> {
-    try {
-      return await this.$db.clients.create({
-        data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    return null;
+  public async create(data: CreateClientDto): Promise<Clients> {
+    return await this.$db.clients.create({
+      data,
+    });
   }
 
-  public async update(
-    id: string,
-    data: UpdateClientDto,
-  ): Promise<Clients | null> {
-    try {
-      return this.$db.clients.update({
-        where: {
-          id,
-        },
-        data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    return null;
+  public async update(id: string, data: UpdateClientDto): Promise<Clients> {
+    return this.$db.clients.update({
+      where: {
+        id,
+      },
+      data,
+    });
   }
 
   public async delete(id: string): Promise<Clients> {

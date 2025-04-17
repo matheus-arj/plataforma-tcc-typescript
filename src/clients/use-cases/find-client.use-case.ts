@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Clients } from '@prisma/client';
 import { ClientsRepository } from '../clients.repository';
 
 @Injectable()
@@ -8,7 +9,7 @@ export class FindClientUseCase {
   @Inject(ClientsRepository)
   private readonly clientsRepository: ClientsRepository;
 
-  public async execute(id: string) {
+  public async execute(id: string): Promise<Clients> {
     this.logger.log(`Finding client with id: ${id}`);
     const client = await this.clientsRepository.findById(id);
 

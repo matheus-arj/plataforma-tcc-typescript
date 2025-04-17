@@ -8,6 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Clients } from '@prisma/client';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { CreateClientUseCase } from './use-cases/create-client.use-case';
@@ -30,27 +31,30 @@ export class ClientsController {
   private readonly deleteClientUseCase: DeleteClientUseCase;
 
   @Get()
-  public async findAll() {
+  public async findAll(): Promise<Clients[]> {
     return this.findClientsUseCase.execute();
   }
 
   @Get(':id')
-  public async findById(@Param('id') id: string) {
+  public async findById(@Param('id') id: string): Promise<Clients> {
     return this.findClientUseCase.execute(id);
   }
 
   @Post()
-  public async create(@Body() data: CreateClientDto) {
+  public async create(@Body() data: CreateClientDto): Promise<Clients> {
     return await this.createClientUseCase.execute(data);
   }
 
   @Put(':id')
-  public async update(@Param('id') id: string, @Body() data: UpdateClientDto) {
+  public async update(
+    @Param('id') id: string,
+    @Body() data: UpdateClientDto,
+  ): Promise<Clients> {
     return await this.updateClientUseCase.execute(id, data);
   }
 
   @Delete(':id')
-  public async delete(@Param('id') id: string) {
+  public async delete(@Param('id') id: string): Promise<Clients> {
     return await this.deleteClientUseCase.execute(id);
   }
 }
